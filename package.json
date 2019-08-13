@@ -1,7 +1,7 @@
 {
   "name": "bootstrap-vue",
   "version": "1.0.0",
-  "description": "My rad Nuxt.js project",
+  "description": "A Nuxt/Bootstrap Vue template for websites.",
   "author": "Chris Roselli",
   "private": true,
   "scripts": {
