@@ -15,6 +15,12 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
+  pageTransition: {
+    name: 'page',
+    beforeEnter (el) {
+      console.log('Before enter...');
+    }
+  },
   /*
   ** Customize the progress-bar color
   */
