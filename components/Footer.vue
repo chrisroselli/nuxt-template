@@ -8,15 +8,50 @@
     </b-col>
     
     <b-col>
+  <b-form @submit="onSubmit" @reset="onReset" v-if="show">
       <b-form-group
-      id="fieldset-1"
-      label="Name"
-      label-for="input-1"
-      :invalid-feedback="invalidFeedback"
-      :state="state"
+        id="input-group-1"
+        label="Email address:"
+        label-for="input-1"
+        description="We'll never share your email with anyone else."
       >
-        <b-form-input id="input-1" v-model="name" :state="state" trim></b-form-input>
+        <b-form-input
+          id="input-1"
+          v-model="form.email"
+          type="email"
+          required
+          placeholder="Enter email"
+        ></b-form-input>
       </b-form-group>
+
+      <b-form-group id="input-group-2" label="Your Name:" label-for="input-2">
+        <b-form-input
+          id="input-2"
+          v-model="form.name"
+          required
+          placeholder="Enter name"
+        ></b-form-input>
+      </b-form-group>
+
+      <b-form-group id="input-group-3" label="Service:" label-for="input-3">
+        <b-form-select
+          id="input-3"
+          v-model="form.service"
+          :options="services"
+          required
+        ></b-form-select>
+      </b-form-group>
+
+      <b-form-group id="input-group-4">
+        <b-form-checkbox-group v-model="form.checked" id="checkboxes-4">
+          <b-form-checkbox value="me">Check me out</b-form-checkbox>
+          <b-form-checkbox value="that">Check that out</b-form-checkbox>
+        </b-form-checkbox-group>
+      </b-form-group>
+
+      <b-button type="submit" variant="primary">Submit</b-button>
+      <b-button type="reset" variant="danger">Reset</b-button>
+    </b-form>
     </b-col>
     <b-col>
       <b-navbar-nav class="ml-auto">
@@ -32,19 +67,35 @@
 </template>
 <script>
   export default {
-    computed: {
-      state() {
-        return this.name.length >= 4 ? true : false
-      },
-      invalidFeedback() {
-        if (this.name.length > 4) {
-          return ''
-        } 
-      }
-    },
     data() {
       return {
-        name: ''
+        form: {
+          email: '',
+          name: '',
+          service: null,
+          checked: []
+        },
+        services: [{ text: 'Select One', value: null }, 'Carrots', 'Beans', 'Tomatoes', 'Corn'],
+        show: true
+      }
+    },
+    methods: {
+      onSubmit(evt) {
+        evt.preventDefault()
+        alert(JSON.stringify(this.form))
+      },
+      onReset(evt) {
+        evt.preventDefault()
+        // Reset our form values
+        this.form.email = ''
+        this.form.name = ''
+        this.form.service = null
+        this.form.checked = []
+        // Trick to reset/clear native browser form validation state
+        this.show = false
+        this.$nextTick(() => {
+          this.show = true
+        })
       }
     }
   }
